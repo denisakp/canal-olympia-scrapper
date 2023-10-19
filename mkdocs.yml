@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
-site_name: Canal Olympia scrapping api
+site_name: Canal Olympia Scrapper
 site_author: Denis AKPAGNONITE
-site_description: Canal Olympia scrapping api is a Python-based web scraping tool for website traversal, link discovery, and data extraction within a domain. Explore websites, map structures, extract valuable data, and classify web pages.
-site_url: https://denisakp.github.io/sangsue
+site_description: Canal Olympia scrapper api is a Python-based web scraping tool for gathering movie and theater information from https://canalolympia.com  .
+site_url: https://denisakp.github.io/canal-olympia-scrapper
 
-repo_name: denisakp/sangsue
-repo_url: https://github.com/denisakp/sangsue
+repo_name: denisakp/canal-olympia-scrapper
+repo_url: https://github.com/denisakp/canal-olympia-scrapper
 
 theme:
   name: material
