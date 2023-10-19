@@ -31,12 +31,12 @@ class Session(BaseModel):
     movies: List[Movie] | None = []
 
 
-class TheaterList(BaseModel):
+class Theater(BaseModel):
     href: str | None = None
     name: str | None = None
 
 
-class Theater(BaseModel):
+class TheaterDetail(BaseModel):
     figure: str | None = None
     title: str | None = None
     address: str | None = None

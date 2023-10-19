@@ -4,14 +4,14 @@ from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 from typing import List
 
 from src.services.theater_service import display_all_theater, display_one_theater
-from src.api.schemas.theater_schema import TheaterList, Theater
+from src.api.schemas.theater_schema import Theater, TheaterDetail
 from src.core.exceptions.api_exception import ApiException
 from src.core.json.rapid_json import RapidJSONResponse
 
 router = APIRouter()
 
 
-@router.get("/", tags=["Theaters"], response_model=List[TheaterList])
+@router.get("/", tags=["Theaters"], response_model=List[Theater])
 def load_theaters_endpoint():
     try:
         response = display_all_theater()
@@ -27,7 +27,7 @@ def load_theaters_endpoint():
         )
 
 
-@router.get("/{slug}", tags=["Theaters"], response_model=Theater)
+@router.get("/{slug}", tags=["Theaters"], response_model=TheaterDetail)
 def load_theater_info_endpoint(slug: str):
     try:
         response = display_one_theater(slug)

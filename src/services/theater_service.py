@@ -5,8 +5,8 @@ from starlette.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from src.wraper.request_wraper import load_html_data, host
 from src.core.exceptions.api_exception import ApiException, ApiErrorsCode
 from src.api.schemas.theater_schema import (
-    TheaterList,
     Theater,
+    TheaterDetail,
     SocialNetwork,
     Pricing,
     Schedule,
@@ -17,13 +17,13 @@ from src.api.schemas.theater_schema import (
 LOGGER = logging.getLogger(__name__)
 
 
-def display_all_theater() -> List[TheaterList]:
+def display_all_theater() -> List[Theater]:
     """
     Display a list of theaters
     :return: List of TheaterList model
     """
     try:
-        response: List[TheaterList] = []
+        response: List[Theater] = []
         soup = load_html_data(host)
 
         div = soup.find("div", class_="theater-select-nav closed-theater-selection")
@@ -35,7 +35,7 @@ def display_all_theater() -> List[TheaterList]:
             href = a_tag["href"]
             theater_name = a_tag.get_text()
 
-            element = TheaterList(**{"href": href, "name": theater_name})
+            element = Theater(**{"href": href, "name": theater_name})
 
             response.append(element)
         return response
@@ -48,7 +48,7 @@ def display_all_theater() -> List[TheaterList]:
         )
 
 
-def display_one_theater(slug) -> Theater:
+def display_one_theater(slug) -> TheaterDetail:
     """
     Load details for an existing theater name
     :param slug: Theater slug
@@ -121,7 +121,7 @@ def display_one_theater(slug) -> Theater:
             )
             sessions.append(element)
 
-        return Theater(
+        return TheaterDetail(
             **{
                 "figure": figure,
                 "title": title,
@@ -170,3 +170,21 @@ def load_session_movies(soup, session_date) -> List[Movie]:
         )
         response.append(element)
     return response
+
+
+def theater_exist(slug: str) -> bool:
+    try:
+        theaters = display_all_theater()
+        if not theaters:
+            LOGGER.error("Theater with slug %s not found", slug)
+            raise ApiException(
+                status_code=HTTP_404_NOT_FOUND,
+                error_code=ApiErrorsCode.THEATER_NOT_FOUND,
+                message=f"Theater with slug {slug} not found",
+            )
+        for theater in theaters:
+            href: str = theater["href"]
+            return True if href.split("/")[--1] == slug else False
+    except Exception as exec_info:
+        LOGGER.exception("Failed to load Theater. Exception %s", str(exec_info))
+        raise exec_info
