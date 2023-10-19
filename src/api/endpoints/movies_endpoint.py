@@ -1,6 +1,6 @@
 import requests
 from fastapi import APIRouter
-from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
+from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK
 from typing import Any, List
 
 from src.services.movies_service import (
@@ -21,7 +21,7 @@ router = APIRouter()
 def load_movies_endpoint(theater: str):
     try:
         response = load_movies(theater)
-        return response
+        return RapidJSONResponse(content=response, status_code=HTTP_200_OK)
     except ApiException as api_exec:
         return RapidJSONResponse(
             status_code=api_exec.status_code, content=api_exec.message
@@ -37,7 +37,7 @@ def load_movies_endpoint(theater: str):
 def load_movie_info_endpoint(slug: str):
     try:
         response = load_movie_info(slug)
-        return response
+        return RapidJSONResponse(content=response.model_dump(), status_code=HTTP_200_OK)
     except ApiException as api_exec:
         return RapidJSONResponse(
             status_code=api_exec.status_code, content=api_exec.message
@@ -49,11 +49,11 @@ def load_movie_info_endpoint(slug: str):
         )
 
 
-@router.get("/{theater}/movies-per-day", tags=["Movies"], response_model=Any)
+@router.get("/{theater}/movies-per-day", tags=["Movies"], response_model=List[Movie])
 def load_movies_per_day_endpoint(theater: str):
     try:
         response = load_movies_per_day(theater)
-        return response
+        return RapidJSONResponse(content=response, status_code=HTTP_200_OK)
     except ApiException as api_exec:
         return RapidJSONResponse(
             status_code=api_exec.status_code, content=api_exec.message
@@ -73,7 +73,7 @@ def load_movies_per_day_endpoint(theater: str):
 def display_movies_by_date_endpoint(theater: str, date: str):
     try:
         response = display_movies_by_date(theater, date)
-        return response
+        return RapidJSONResponse(content=response, status_code=HTTP_200_OK)
     except ApiException as api_exec:
         return RapidJSONResponse(
             status_code=api_exec.status_code, content=api_exec.message
@@ -91,7 +91,7 @@ def display_movies_by_date_endpoint(theater: str, date: str):
 def display_movies_by_date_endpoint(theater: str, language: str):
     try:
         response = display_movies_by_language(theater, language)
-        return response
+        return RapidJSONResponse(content=response)
     except ApiException as api_exec:
         return RapidJSONResponse(
             status_code=api_exec.status_code, content=api_exec.message

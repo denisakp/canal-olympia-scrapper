@@ -34,7 +34,7 @@ def load_html_data(host_str: str) -> BeautifulSoup:
     """
     try:
         response = send_http_request(host_str)
-        return BeautifulSoup(response.text, "html.parser")
+        return BeautifulSoup(response.text, "html.parser", from_encoding="utf-8")
     except requests.exceptions.RequestException as request_exec:
         raise ApiException(
             error_code=ApiErrorsCode.NETWORK_REQUEST_FAILED,
