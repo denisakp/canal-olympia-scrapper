@@ -1,4 +1,4 @@
-# Canal Olympia Scrapping API 
+# Canal Olympia Web Scrapping API (NON-OFFICIAL)  
     
 ## Description  
   
