@@ -1,15 +1,10 @@
-# Canal Olympia Web Scrapping API (NON-OFFICIAL)  
+# Canal Olympia Scrapping API 
     
-## Description  
-  
-This project, is a Python adaptation of the original 
-[idea](https://github.com/NemesisX1/canal_olympia_scrapping_api) written in TypeScript. It is
-intended to provide [briefly describe the purpose or goal of your project].  
-  
 
 ## What the Project Does
 
-The project allows you to scrape data from the Canal Olympia [official site](https://www.canalolympia.com/) and
+This project is a Python adaptation of the original 
+[idea](https://github.com/NemesisX1/canal_olympia_scrapping_api) written in TypeScript. It is intended to allow you to scrape data from the Canal Olympia [official site](https://www.canalolympia.com/) and
 provides the data in JSON format. This JSON-formatted data can be used for various purposes, including but not limited
 to:
 
